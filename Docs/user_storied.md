@@ -4,4 +4,4 @@
 |----|------|-------------|----------|---------------------|
 | US-1 | Route Planning | As a traveler, I want to enter a source and destination so that I can generate a travel route. | High | User can input valid locations and submit route request successfully. |
 | US-2 | Route Planning | As a traveler, I want to view my route on an interactive map so that I can visualize my trip | High | Route polyline and destination markers appear clearly on the map. |
-| US-3 | Atraction Discovery | As a traveler, I want to see attractions along my route so tha I can discover places to visit. | High | Attractions appear as markers along the generated route |
+| US-3 | Attraction Discovery | As a traveler, I want to see attractions along my route so tha I can discover places to visit. | High | Attractions appear as markers along the generated route |
