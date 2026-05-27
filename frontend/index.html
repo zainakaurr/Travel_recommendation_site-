@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Site | Route-first travel planning</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="brand" href="#" aria-label="Travel Site home">
+          <span class="brand-mark" aria-hidden="true">TS</span>
+          <span>Travel Site</span>
+        </a>
+
+        <div class="nav-menu" id="navMenu">
+          <div class="nav-links" aria-label="Page sections">
+            <a href="#planner">Plan</a>
+            <a href="#features">Features</a>
+            <a href="#preview">Preview</a>
+          </div>
+
+          <button class="account-button mobile-account-button" type="button">Log in / Sign up</button>
+
+          <details class="accessibility-menu">
+            <summary>Accessibility</summary>
+            <div class="accessibility-panel" aria-label="Accessibility options">
+              <button class="icon-button" id="themeToggle" type="button" aria-pressed="false">
+                <span aria-hidden="true">D</span>
+                <span class="button-label">Dark mode</span>
+              </button>
+              <button class="icon-button" id="contrastToggle" type="button" aria-pressed="false">
+                <span aria-hidden="true">HC</span>
+                <span class="button-label">High contrast</span>
+              </button>
+            </div>
+          </details>
+        </div>
+
+        <button class="account-button desktop-account-button" id="accountOpen" type="button">Log in / Sign up</button>
+
+        <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="navMenu">
+          Menu
+        </button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="planner">
+        <div class="hero-copy">
+          <p class="eyebrow">Route-first travel planning</p>
+          <h1>Plan the road between where you are and where you want to go.</h1>
+          <p class="subheadline">
+            Travel Site helps beginners build a trip route, discover attractions along the way,
+            choose stops by interest, and keep privacy controls close by.
+          </p>
+
+          <div class="trip-spark" aria-label="Trip planning highlights">
+            <span>Scenic detours</span>
+            <span>Local food stops</span>
+            <span>Safety notes</span>
+          </div>
+
+          <form class="route-form" aria-label="Route planner preview">
+            <div class="field-grid">
+              <label for="source">
+                <span>Source location</span>
+                <input id="source" name="source" type="text" placeholder="Toronto, ON" />
+              </label>
+              <label for="destination">
+                <span>Destination</span>
+                <input id="destination" name="destination" type="text" placeholder="Niagara Falls, ON" />
+              </label>
+            </div>
+
+            <fieldset class="interest-group">
+              <legend>Interests</legend>
+              <label><input type="checkbox" name="interest" value="nature" checked /> Nature</label>
+              <label><input type="checkbox" name="interest" value="food" /> Food</label>
+              <label><input type="checkbox" name="interest" value="history" /> History</label>
+              <label><input type="checkbox" name="interest" value="museums" /> Museums</label>
+              <label><input type="checkbox" name="interest" value="parks" /> Parks</label>
+            </fieldset>
+
+            <div class="form-actions">
+              <button class="primary-button" type="submit">Try the service</button>
+              <label class="switch">
+                <input id="privateMode" type="checkbox" />
+                <span>Private mode</span>
+              </label>
+            </div>
+
+            <p class="form-note" id="routeStatus" aria-live="polite">
+              Test it: enter two places, choose interests, then try the service.
+            </p>
+          </form>
+        </div>
+
+        <div class="map-preview" id="mapPreview" aria-label="Illustrated route preview">
+          <div class="map-titlebar">
+            <div>
+              <p class="map-label">Live route preview</p>
+              <h2>Toronto to Niagara Falls</h2>
+            </div>
+            <div class="map-controls" aria-label="Map controls">
+              <button id="zoomOut" type="button" aria-label="Zoom out">-</button>
+              <span id="mapZoomLevel" aria-live="polite">100%</span>
+              <button id="zoomIn" type="button" aria-label="Zoom in">+</button>
+            </div>
+            <button class="map-close" id="closeMap" type="button" aria-label="Close full screen map">X</button>
+          </div>
+          <div class="map-toolbar">
+            <span>Toronto</span>
+            <span>1h 28m</span>
+            <span>Niagara Falls</span>
+          </div>
+          <div class="map-viewport" id="mapViewport" role="button" tabindex="0" aria-label="Open map full screen">
+            <div class="map-canvas" id="mapCanvas" aria-hidden="true">
+              <span class="map-road road-one"></span>
+              <span class="map-road road-two"></span>
+              <span class="map-water"></span>
+              <span class="map-park park-one"></span>
+              <span class="map-park park-two"></span>
+              <span class="map-pin start"></span>
+              <span class="route-line"></span>
+              <span class="route-stop stop-one"></span>
+              <span class="route-stop stop-two"></span>
+              <span class="route-stop stop-three"></span>
+              <span class="map-pin end"></span>
+            </div>
+          </div>
+          <div class="route-stats">
+            <span><strong>6</strong> attractions</span>
+            <span><strong>3</strong> nature stops</span>
+            <span><strong>1</strong> safety note</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-band" aria-labelledby="stepsTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Simple workflow</p>
+          <h2 id="stepsTitle">How it works</h2>
+        </div>
+        <div class="steps">
+          <article>
+            <span class="step-number">1</span>
+            <h3>Enter your route</h3>
+            <p>Start with where you are and where you want to go.</p>
+          </article>
+          <article>
+            <span class="step-number">2</span>
+            <h3>Choose interests</h3>
+            <p>Filter attractions by nature, food, museums, history, parks, and more.</p>
+          </article>
+          <article>
+            <span class="step-number">3</span>
+            <h3>Explore smart stops</h3>
+            <p>Review route ideas, attraction cards, safety tips, and offline options.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-band feature-band" id="features" aria-labelledby="featuresTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Built around your user stories</p>
+          <h2 id="featuresTitle">Helpful without feeling complicated</h2>
+        </div>
+        <div class="feature-grid">
+          <article>
+            <span class="feature-icon" aria-hidden="true">~</span>
+            <h3>Interactive route map</h3>
+            <p>Show the route, destination markers, and attractions in one focused view.</p>
+          </article>
+          <article>
+            <span class="feature-icon" aria-hidden="true">*</span>
+            <h3>Personalized recommendations</h3>
+            <p>Use trip interests to suggest sightseeing stops and route improvements.</p>
+          </article>
+          <article>
+            <span class="feature-icon" aria-hidden="true">[]</span>
+            <h3>Attraction cards</h3>
+            <p>Display the name, category, reason to visit, and practical cautions.</p>
+          </article>
+          <article>
+            <span class="feature-icon" aria-hidden="true">+</span>
+            <h3>Save and download</h3>
+            <p>Keep favorite trips and export PDFs for offline travel days.</p>
+          </article>
+          <article>
+            <span class="feature-icon" aria-hidden="true">HC</span>
+            <h3>Accessible controls</h3>
+            <p>Support keyboard navigation, high contrast mode, and responsive layouts.</p>
+          </article>
+          <article>
+            <span class="feature-icon" aria-hidden="true">P</span>
+            <h3>Privacy-minded planning</h3>
+            <p>Let travelers use private mode when they do not want trip history stored.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-band preview-band" id="preview" aria-labelledby="previewTitle">
+        <div class="section-heading">
+          <p class="eyebrow">Example trip</p>
+          <h2 id="previewTitle">A route plan travelers can understand quickly</h2>
+        </div>
+
+        <div class="trip-preview">
+          <article class="trip-summary">
+            <p class="trip-label">Weekend route</p>
+            <h3>Toronto to Niagara Falls</h3>
+            <p>
+              Suggested stops include a lakeside park, a local food market, and a scenic lookout
+              before the final destination.
+            </p>
+            <div class="trip-actions">
+              <button type="button">Save trip</button>
+              <button type="button">Download PDF</button>
+            </div>
+          </article>
+
+          <article class="tip-list" aria-label="Trip notes">
+            <h3>What else belongs on the landing page?</h3>
+            <ul>
+              <li>A quick route planner so visitors understand the main action immediately.</li>
+              <li>A privacy note explaining private mode in plain language.</li>
+              <li>A sample trip preview to show what the app creates.</li>
+              <li>Accessibility controls so high contrast and keyboard use are visible early.</li>
+            </ul>
+            <p class="safety-tip">
+              Travel safety tip: avoid joining unknown public Wi-Fi without a VPN or secure connection.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Travel Site is a planning preview. Map, account, and recommendation APIs can connect next.</p>
+    </footer>
+
+    <div class="modal" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <section class="auth-panel modal-card" id="account" tabindex="-1">
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close login and signup popup">
+          Close
+        </button>
+
+        <div class="auth-tabs" role="tablist" aria-label="Account options">
+          <button id="loginTab" class="auth-tab active" type="button" role="tab" aria-selected="true">
+            Log in
+          </button>
+          <button id="signupTab" class="auth-tab" type="button" role="tab" aria-selected="false">
+            Sign up
+          </button>
+        </div>
+
+        <h2 id="authTitle">Welcome back</h2>
+        <p id="authCopy">Log in to save trip ideas and return to your routes later.</p>
+
+        <form class="auth-form" aria-label="Login and signup preview">
+          <label for="email">
+            <span>Email</span>
+            <input id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+          </label>
+          <label for="password">
+            <span>Password</span>
+            <input id="password" type="password" placeholder="At least 8 characters" autocomplete="current-password" />
+          </label>
+          <button class="secondary-button" id="authButton" type="submit">Log in</button>
+        </form>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
