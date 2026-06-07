@@ -1,28 +1,166 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    #controls { margin-bottom: 10px; display: flex; gap: 10px; }
-    input { padding: 8px; width: 200px; border: 1px solid #ccc; border-radius: 4px; }
-    button { padding: 8px 16px; background: #0077cc; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    #error { color: red; margin: 8px 0; }
-    #map { height: 500px; border-radius: 8px; }
-  </style>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Site | Map Trip Planner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#planner">Skip to planner</a>
 
-  <div id="controls">
-    <input id="origin" placeholder="Origin (lat,lng) e.g. 43.6,-79.3" />
-    <input id="destination" placeholder="Destination (lat,lng) e.g. 45.4,-75.7" />
-    <button onclick="search()">Search</button>
-  </div>
+    <main class="map-app" id="main">
+      <!-- TEMP MAP BACKGROUND: replace this whole .map-scene block with the Google Maps container later. -->
+      <div class="map-scene" id="mapScene" aria-label="Full screen route map">
+        <div class="map-layer" id="mapLayer">
+          <span class="map-water water-one"></span>
+          <span class="map-water water-two"></span>
+          <span class="map-park park-one"></span>
+          <span class="map-park park-two"></span>
+          <span class="map-park park-three"></span>
+          <span class="map-road highway"></span>
+          <span class="map-road road-one"></span>
+          <span class="map-road road-two"></span>
+          <span class="map-road road-three"></span>
+          <span class="map-road road-four"></span>
+          <span class="route-line"></span>
+          <span class="map-pin pin-start" aria-hidden="true"></span>
+          <span class="map-pin pin-end" aria-hidden="true"></span>
+          <button class="attraction-pin food-pin" type="button" aria-label="Food attraction">Food</button>
+          <button class="attraction-pin nature-pin" type="button" aria-label="Nature attraction">Nature</button>
+          <button class="attraction-pin museum-pin" type="button" aria-label="Museum attraction">Museum</button>
+          <button class="attraction-pin lookout-pin" type="button" aria-label="Scenic attraction">View</button>
+        </div>
+      </div>
 
-  <div id="error"></div>
-  <div id="map"></div>
+      <header class="topbar" aria-label="Travel Site controls">
+        <a class="brand" href="#" aria-label="Travel Site home">
+          <span class="brand-mark" aria-hidden="true">TS</span>
+          <span>Travel Site</span>
+        </a>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="app.js"></script>
-</body>
+        <div class="topbar-actions">
+          <button class="icon-button" id="themeToggle" type="button" aria-pressed="false">
+            <span aria-hidden="true">D</span>
+            <span class="button-label">Dark</span>
+          </button>
+          <button class="icon-button" id="contrastToggle" type="button" aria-pressed="false">
+            <span aria-hidden="true">HC</span>
+            <span class="button-label">Contrast</span>
+          </button>
+          <button class="account-button" id="accountOpen" type="button">Sign in</button>
+        </div>
+      </header>
+
+      <div class="map-zoom-controls" aria-label="Map zoom controls">
+        <button id="zoomIn" type="button" aria-label="Zoom in">+</button>
+        <span id="zoomLevel" aria-live="polite">100%</span>
+        <button id="zoomOut" type="button" aria-label="Zoom out">-</button>
+      </div>
+
+      <section class="planner-panel" id="planner" aria-label="Trip planner">
+        <button class="panel-toggle" id="panelToggle" type="button" aria-expanded="true" aria-controls="planner">
+          <span class="panel-toggle-open">Hide</span>
+          <span class="panel-toggle-closed">Plan</span>
+        </button>
+
+        <div class="panel-content">
+          <div class="panel-heading">
+            <p class="eyebrow">Trip route</p>
+            <h1>Find attractions on your route</h1>
+          </div>
+
+          <form class="route-form" aria-label="Route planner">
+            <div class="field-grid">
+              <label for="source">
+                <span>Starting point</span>
+                <input id="source" name="source" type="text" placeholder="Toronto, ON" />
+              </label>
+              <label for="destination">
+                <span>Destination</span>
+                <input id="destination" name="destination" type="text" placeholder="Niagara Falls, ON" />
+              </label>
+            </div>
+
+            <label for="attractionLimit">
+              <span>Attraction limit</span>
+              <input id="attractionLimit" name="attractionLimit" type="number" min="1" max="25" value="6" />
+            </label>
+
+            <label for="interestText">
+              <span>Your interests</span>
+              <input id="interestText" name="interestText" type="text" placeholder="food, waterfalls, museums" />
+            </label>
+
+            <fieldset class="interest-group">
+              <legend>Quick interests</legend>
+              <label><input type="checkbox" name="interest" value="nature" checked /> Nature</label>
+              <label><input type="checkbox" name="interest" value="food" checked /> Food</label>
+              <label><input type="checkbox" name="interest" value="history" /> History</label>
+              <label><input type="checkbox" name="interest" value="museums" /> Museums</label>
+              <label><input type="checkbox" name="interest" value="parks" /> Parks</label>
+            </fieldset>
+
+            <label class="switch">
+              <input id="privateMode" type="checkbox" />
+              <span>Private mode</span>
+            </label>
+
+            <button class="primary-button" type="submit">Plan route</button>
+            <p class="form-note" id="routeStatus" aria-live="polite">
+              Route preview ready for Toronto to Niagara Falls.
+            </p>
+          </form>
+        </div>
+      </section>
+
+      <aside class="trip-drawer" aria-label="Current trip">
+        <div>
+          <p class="eyebrow">Current trip</p>
+          <h2 id="tripTitle">Toronto to Niagara Falls</h2>
+          <p id="tripMeta">6 attractions. Nature, food.</p>
+        </div>
+        <div class="trip-actions">
+          <button id="viewTrip" type="button" data-requires-auth>View trip</button>
+          <button id="saveTrip" type="button" data-requires-auth disabled>Save</button>
+          <button id="downloadTrip" type="button" data-requires-auth disabled>Download</button>
+        </div>
+      </aside>
+    </main>
+
+    <div class="modal" id="accountModal" role="dialog" aria-modal="true" aria-labelledby="authTitle" hidden>
+      <div class="modal-backdrop" data-close-modal></div>
+      <section class="auth-panel modal-card" id="account" tabindex="-1">
+        <button class="modal-close" id="modalClose" type="button" aria-label="Close login and signup popup">
+          Close
+        </button>
+
+        <div class="auth-tabs" role="tablist" aria-label="Account options">
+          <button id="loginTab" class="auth-tab active" type="button" role="tab" aria-selected="true">
+            Log in
+          </button>
+          <button id="signupTab" class="auth-tab" type="button" role="tab" aria-selected="false">
+            Sign up
+          </button>
+        </div>
+
+        <h2 id="authTitle">Welcome back</h2>
+        <p id="authCopy">Log in to view, save, and download your trips.</p>
+
+        <form class="auth-form" aria-label="Login and signup preview">
+          <label for="email">
+            <span>Email</span>
+            <input id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+          </label>
+          <label for="password">
+            <span>Password</span>
+            <input id="password" type="password" placeholder="At least 8 characters" autocomplete="current-password" />
+          </label>
+          <button class="secondary-button" id="authButton" type="submit">Log in</button>
+        </form>
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
